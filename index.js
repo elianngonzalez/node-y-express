@@ -34,7 +34,15 @@ app.get('/api/notes/:id', (request, response) => {
 		response.status(404).end();
 	}
 	console.log(note)
-})
+});
+
+app.delete('/api/notes/:id', (request, response) => {
+	const id = Number(request.params.id);
+	notes = notes.filter(note => note.id !== id)
+	response.status(204).end();
+});
+
+
 
 app.get("/api/notes",(req, res) => {
 	res.json(notes);
