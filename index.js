@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+app.use(express.json())
 
 let notes = [{
 		id: 1,
@@ -25,6 +26,12 @@ app.get('/', (req, res) => {
 	res.send('<h1>Hello World!</h1>');
 });
 
+// GET /api/notes obtengo todas las notas
+app.get("/api/notes",(req, res) => {
+	res.json(notes);
+});
+
+// GET /api/notes/:id obtengo una nota en especifico
 app.get('/api/notes/:id', (request, response) => {
 	const id = Number(request.params.id);
 	const note = notes.find(note => note.id === id);
@@ -36,19 +43,21 @@ app.get('/api/notes/:id', (request, response) => {
 	console.log(note)
 });
 
+//delete /api/notes/:id elimino una nota en especifico
 app.delete('/api/notes/:id', (request, response) => {
 	const id = Number(request.params.id);
 	notes = notes.filter(note => note.id !== id)
 	response.status(204).end();
 });
 
-
-
-app.get("/api/notes",(req, res) => {
-	res.json(notes);
+//post /api/notes envio una nota como json
+app.post('/api/notes', (request, response) => {
+	const note = request.body
+	console.log(note)
+	response.json(note)
 });
 
-const port = 3000;
+const port = 3000;//puerto
 app.listen(port, () => {
 	console.log(`Server running at http://localhost:${port}/`);
 });
