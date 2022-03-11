@@ -26,9 +26,10 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api/notes/:id', (request, response) => {
-	const id = request.params.id
-	const note = notes.find(note => note.id === id)
+	const id = Number(request.params.id);
+	const note = notes.find(note => note.id === id);
 	response.json(note)
+	console.log(note)
 })
 
 app.get("/api/notes",(req, res) => {
