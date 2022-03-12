@@ -2,6 +2,25 @@ const express = require('express');
 const app = express();
 app.use(express.json())
 
+
+/*
+-----------------------------------------------------------------------------------------------------
+|	URL   |  VERVO  |                               FUNCIONALIDAD
+-----------------------------------------------------------------------------------------------------
+notes/10  |  GET     |   obtiene un solo recurso
+-----------------------------------------------------------------------------------------------------
+notes     |  GET     |   obtiene todos los recursos en una colección
+-----------------------------------------------------------------------------------------------------
+notes     |  POST    |   crea un nuevo recurso basado en los datos de la solicitud
+-----------------------------------------------------------------------------------------------------
+notes/10  |  DELETE  |   elimina el recurso identificado
+-----------------------------------------------------------------------------------------------------
+notes/10  |  PUT     |   reemplaza todo el recurso identificado con los datos de la solicitud
+-----------------------------------------------------------------------------------------------------
+notes/10  |  PATCH   |   reemplaza una parte del recurso identificado con los datos de la solicitud
+*/
+
+
 let notes = [{
 		id: 1,
 		content: "HTML is easy",
@@ -51,6 +70,10 @@ app.get('/', (req, res) => {
 });
 
 // GET /api/notes obtengo todas las notas
+app.get("/api/notes",(req, res) => {
+	res.json(notes);
+});
+
 app.get("/api/persons",(req, res) => {
 	res.json(persons);
 });
@@ -72,6 +95,12 @@ app.get("/api/persons/:id", (req, res) => {
 		res.status(404).end();
 	}
 })
+
+app.delete("/api/persons/:id", (req, res) => {
+	const id = Number(req.params.id);
+	persons = persons.filter(person => person.id !== id);
+	res.status(204).end();
+	})
 
 // GET /api/notes/:id obtengo una nota en especifico
 app.get('/api/notes/:id', (request, response) => {
