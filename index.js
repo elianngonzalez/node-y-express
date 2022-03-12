@@ -5,7 +5,7 @@ app.use(express.json())
 
 /*
 -----------------------------------------------------------------------------------------------------
-|	URL   |  VERVO  |                               FUNCIONALIDAD
+|	URL   |  VERVO   |                               FUNCIONALIDAD
 -----------------------------------------------------------------------------------------------------
 notes/10  |  GET     |   obtiene un solo recurso
 -----------------------------------------------------------------------------------------------------
@@ -113,9 +113,13 @@ app.post('/api/persons', (request, response) => {
 
 	if (!body.name || !body.number) {
 		return response.status(400).json({
-			error: 'sin contenido'
-		})
-	}
+			error: 'sin contenido'}
+			)
+		}
+	if (persons.find(person => person.name === body.name)) {
+		return response.status(404).json({
+			error: 'el nombre ya existe'}
+			)}
 	const person = {
 		id: getRandom(),
 		name: body.name,
