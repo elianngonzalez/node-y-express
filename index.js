@@ -99,8 +99,35 @@ app.get("/api/persons/:id", (req, res) => {
 app.delete("/api/persons/:id", (req, res) => {
 	const id = Number(req.params.id);
 	persons = persons.filter(person => person.id !== id);
-	res.status(204).end();
+	res.status(204).send(`Person ${id} deleted`);
 	})
+
+
+function getRandom() {
+		return Math.random();
+	}
+
+app.post('/api/persons', (request, response) => {
+	const body = request.body;
+
+	if (!body.name || !body.number) {
+		return response.status(400).json({
+			error: 'sin contenido'
+		})
+	}
+	const person = {
+		id: getRandom(),
+		name: body.name,
+		number: body.number,
+	}
+	persons = persons.concat(person)
+	response.json(person);
+	response.status(200).end();
+})
+
+
+
+
 
 // GET /api/notes/:id obtengo una nota en especifico
 app.get('/api/notes/:id', (request, response) => {
