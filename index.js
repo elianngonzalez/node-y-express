@@ -84,7 +84,7 @@ app.use(requestLogger)
 */
 
 app.get('/', (req, res) => {
-	res.send('<h1>Hello World!</h1>');
+	res.send('<h1>Hello World! this is a api rest with node and express</h1>');
 });
 
 // GET /api/notes obtengo todas las notas
